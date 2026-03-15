@@ -1,0 +1,27 @@
+CUDA_VISIBLE_DEVICES=0 \
+swift sft \
+    --model_type deepseek_janus_pro \
+    --model /data1/sshan24/Janus/model \
+    --custom_dataset_info /data1/sshan24/Janus/medical_processor/data_risk_v2_split/dataset_info.json \
+    --dataset medical_DFS_train:train \
+    --train_type lora \
+    --loss_type focal \
+    --torch_dtype bfloat16 \
+    --num_train_epochs 1 \
+    --per_device_train_batch_size 1 \
+    --per_device_eval_batch_size 1 \
+    --learning_rate 1e-4 \
+    --lora_rank 8 \
+    --lora_alpha 32 \
+    --target_modules all-linear \
+    --freeze_vit true \
+    --gradient_accumulation_steps 16 \
+    --save_steps 500 \
+    --save_total_limit 2 \
+    --logging_steps 10 \
+    --output_dir output \
+    --warmup_ratio 0.05 \
+    --dataloader_num_workers 4 \
+    --dataset_num_proc 4 \
+    --max_length 8192 \
+    --output_dir ./output_baseline_risk_v2_split_dfs
